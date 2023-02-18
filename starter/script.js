@@ -12,7 +12,9 @@ var upperCasedCharacters = [  'A',  'B',  'C',  'D',  'E',  'F',  'G',  'H',  'I
 
 // Function to prompt user for password options
 function getPasswordOptions() {
-
+  var length = parseInt(
+    prompt('Your password should contain 8 charecters')
+  );
 }
 
 // Function for getting a random element from an array
