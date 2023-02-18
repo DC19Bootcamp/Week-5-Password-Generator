@@ -6,7 +6,7 @@ The purpose was to create a set of requirements/prompts that a user needs to inp
 
 ## Deployed application 
 
-#Prompts
+# Prompts
 ![image](https://user-images.githubusercontent.com/119360569/219882630-81e48d66-6d43-4435-81fb-56c8a9d99cf0.png)
 
 # Generated password
