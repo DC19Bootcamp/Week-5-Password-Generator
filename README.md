@@ -14,7 +14,7 @@ The purpose was to create a set of requirements/prompts that a user needs to inp
 
 # Links to:
 
-https://dc19bootcamp.github.io/Week-5-Password-Generator/
+URL deployed application: https://dc19bootcamp.github.io/Week-5-Password-Generator/
 
 My URL of the GitHub repository: https://github.com/DC19Bootcamp
 
