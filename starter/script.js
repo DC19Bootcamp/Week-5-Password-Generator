@@ -1,49 +1,100 @@
-// Function to generate a password
-function generatePassword() {
-  // Set of characters to choose from based on user criteria
-  const characterSets = {
-    lowercase: 'abcdefghijklmnopqrstuvwxyz',
-    uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    numeric: '0123456789',
-    special: '!@#$%^&*()_+-=[]{}|;:,.<>/?'
+function getPasswordOptions() {
+  var length = parseInt(
+    prompt('How many characters would you like your password to contain?')
+  );
+
+  // Conditional statement to check if password length is a number. Prompts end if this evaluates false
+  if (isNaN(length) === true) {
+    alert('Password length must be a number');
+    return;
+  }
+
+  // Conditional statement to check if password length is at least 8 characters long. Prompts end if this evaluates false
+  if (length < 8) {
+    alert('Password length must be at least 8 characters');
+    return;
+  }
+
+  // Conditional statement to check if password length is less than 128 characters long. Prompts end if this evaluates false
+  if (length > 128) {
+    alert('Password length must be less than 129 characters');
+    return;
+  }
+
+  // Variable to store boolean regarding the inclusion of special characters
+  var hasSpecialCharacters = confirm(
+    'Click OK to confirm including special characters.'
+  );
+
+  // Variable to store boolean regarding the inclusion of numeric characters
+  var hasNumericCharacters = confirm(
+    'Click OK to confirm including numeric characters.'
+  );
+
+  // Variable to store boolean regarding the inclusion of lowercase characters
+  var hasLowerCasedCharacters = confirm(
+    'Click OK to confirm including lowercase characters.'
+  );
+
+  // Variable to store boolean regarding the inclusion of uppercase characters
+  var hasUpperCasedCharacters = confirm(
+    'Click OK to confirm including uppercase characters.'
+  );
+
+  if (
+    hasSpecialCharacters === false &&
+    hasNumericCharacters === false &&
+    hasLowerCasedCharacters === false &&
+    hasUpperCasedCharacters === false
+  ) {
+    alert('Must select at least one character type');
+    return;
+  }
+
+  // Create an object to store the password options
+  var passwordOptions = {
+    length: length,
+    hasSpecialCharacters: hasSpecialCharacters,
+    hasNumericCharacters: hasNumericCharacters,
+    hasLowerCasedCharacters: hasLowerCasedCharacters,
+    hasUpperCasedCharacters: hasUpperCasedCharacters,
   };
 
-  // Prompt user for password length
-  let passwordLength = parseInt(prompt('How many characters should the password contain?'));
-  while (isNaN(passwordLength) || passwordLength < 8 || passwordLength > 128) {
-    passwordLength = parseInt(prompt('Please enter a number between 8 and 128.'));
+  return passwordOptions;
+}
+
+function generatePassword() {
+  var options = getPasswordOptions();
+  var password = "";
+  var availableChars = "";
+
+  // Define the character sets to use in the password based on the user's input
+  if (options.hasSpecialCharacters) {
+    availableChars += "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+  }
+  if (options.hasNumericCharacters) {
+    availableChars += "0123456789";
+  }
+  if (options.hasLowerCasedCharacters) {
+    availableChars += "abcdefghijklmnopqrstuvwxyz";
+  }
+  if (options.hasUpperCasedCharacters) {
+    availableChars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   }
 
-  // Prompt user for character set criteria
-  let includeLowercase = confirm('Include lowercase letters?');
-  let includeUppercase = confirm('Include uppercase letters?');
-  let includeNumeric = confirm('Include numeric characters?');
-  let includeSpecial = confirm('Include special characters?');
-
-  // Build character set based on user criteria
-  let characterSet = '';
-  if (includeLowercase) {
-    characterSet += characterSets.lowercase;
-  }
-  if (includeUppercase) {
-    characterSet += characterSets.uppercase;
-  }
-  if (includeNumeric) {
-    characterSet += characterSets.numeric;
-  }
-  if (includeSpecial) {
-    characterSet += characterSets.special;
-  }
-
-  // Generate password by randomly selecting characters from the character set
-  let password = '';
-  for (let i = 0; i < passwordLength; i++) {
-    password += characterSet[Math.floor(Math.random() * characterSet.length)];
+  // Generate the password using the selected character sets
+  for (var i = 0; i < options.length; i++) {
+    password += availableChars.charAt(
+      Math.floor(Math.random() * availableChars.length)
+    );
   }
 
   return password;
 }
 
-// Call the function to generate a password and log the result to the console
-let password = generatePassword();
-console.log(password);
+var generateBtn = document.querySelector("#generate");
+
+generateBtn.addEventListener("click", function() {
+  var passwordText = document.querySelector("#password");
+  passwordText.value = generatePassword();
+});
